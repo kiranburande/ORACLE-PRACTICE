@@ -1,0 +1,259 @@
+                          DATE FUNCTIONS TASK
+                         =====================
+1.Write a query to display the employees who are joining
+      in the month December from emp table by
+               using to_char()?
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'MM') = '12';
+
+
+2.Write a query to display the employees who are joining 
+      in the month December from emp table by 
+          using to_char() month format?
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'MON') = 'DEC';
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'MM') = '12';
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'MONTH') = 'DECEMBER';
+
+
+
+3.Write a query to display the employees who are 
+     joining in the year '81' from emp table
+               using to_char()?
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'YY') = '81';
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'YYYY') = '1981';
+
+
+
+4.Write a query to display the employees who are joining
+     before 15th of every month from emp table 
+                using to_char()?
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'DD') < '15';
+
+
+
+5.Write a query to display the YEAR from '15-aug-2024' ?
+
+
+SQL> SELECT TO_CHAR(TO_DATE('15-AUG-2024','DD-MM-YYYY'),'YYYY') FROM DUAL;
+
+
+
+6.Find which day india got independence by using to_char()?
+
+SQL> SELECT  TO_CHAR(TO_DATE('15-AUG-1947'),'DAY') FROM DUAL;
+
+
+
+7.Display 4 digit year from emp table by using to_char()?
+
+SQL> SELECT TO_CHAR(HIREDATE,'YYYY') FROM EMP;
+
+
+
+8.Write a query to display the emplloyees who are joining in 1982?
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'YYYY')= 1982;
+
+
+
+9.Write a query to display the emplloyees who are joining in
+  jan,march,dec months?
+
+SQL> SELECT * FROM  EMP WHERE TO_CHAR(HIREDATE,'MON') IN ('JAN','MAR','DEC') ;
+
+
+
+10.Write a query to display the emplloyees who are joining in 
+    2nd auarter?
+
+SQL> SELECT * FROM  EMP WHERE TO_CHAR(HIREDATE,'MON') IN ('APR','MAY','JUN') ;
+
+
+
+11.Write a query to display the emplloyees who are joining in
+   1st and 3rd quarter?
+
+SQL> SELECT * FROM  EMP WHERE TO_CHAR(HIREDATE,'MON') IN ('JAN','FEB','MAR','JUL','AUG','SEP') ;
+
+
+
+12.Write a query to display the employees who are joining in 1982
+    december?
+
+SQL> SELECT * FROM  EMP WHERE TO_CHAR(HIREDATE,'MON-YY') IN ('DEC-82') ;
+
+
+
+13.Write a query to display the emplloyees who are joining in 1981 
+   1st quarter?
+
+SQL> SELECT * FROM  EMP WHERE TO_CHAR(HIREDATE,'MON-YY') IN ('JAN-81','FEB-81','MAR-81') ;
+
+
+
+14.Write a query to display the emplloyees who are joining 
+    on sunday from emp table?
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'DY') = 'SUN' ;
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'FMDAY') = 'SUNDAY' ;
+
+
+
+15.Write a query to display the employees who are joining in 2nd
+   week?
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'W') = '2' ;
+
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'W') = '2' ;  <==== WHEN WE WANT THE WEEK OF YEAR.
+
+
+
+16.Write a query to display  the employees who are joining in 
+   2nd week of JANUARY?
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'W-MON') = '2-JAN' ;
+
+
+
+17.Write a query to display the emplloyee records along with 
+        hiredates and display the hiredates in 
+           INDIA date formatt[DD/MM/YYYY]?
+
+SQL> SELECT EMPNO,ENAME,JOB,MGR,TO_CHAR(HIREDATE,'DD/MM/YYYY') AS HIREDATE ,SAL,COMM,DEPTNO FROM EMP;
+
+
+
+18.Write a query to display the emplloyee records along with
+       hiredates and display the hiredates in 
+            US date formatt[MM/DD/YYYY]?
+
+SQL> SELECT EMPNO,ENAME,JOB,MGR,TO_CHAR(HIREDATE,'MM/DD/YYYY') AS HIREDATE ,SAL,COMM,DEPTNO FROM EMP;
+
+
+
+19.Write a query which is used to substitute a message 
+   inplace of null values in mgr column from emp table
+           by using to_char()?
+Hint:king has no manager.in king mgr column we need to display
+      NO MANAGER 
+
+
+SQL> SELECT ENAME, SAL, NVL(TO_CHAR(MGR),'NO MANAGER') FROM EMP;
+
+
+
+
+20.Write a query which is used to substitute a message
+   inplace of null values in comm column from emp table 
+             by using to_char()?
+
+SQL> SELECT ENAME, SAL, NVL(TO_CHAR(COMM),'N/A') FROM EMP;
+
+
+
+
+21.Write a query to convert given date string into client
+    requirement format by using to_char() 
+
+Given date is -> '15-JUN-05'
+display format is-> '15/JUNE/05'
+
+
+SQL> SELECT TO_CHAR(TO_DATE('15-JUN-05'),'DD/FMMONTH/YY') FROM DUAL;
+
+
+
+22.write a query which is used to add 5 days to the given date
+  '18-apr-08'
+
+SQL> SELECT TO_DATE('18-APR-08')+5 FROM DUAL;
+
+
+
+23.write a query which is used to add 5 days to the given date
+  '10-04-08'
+
+SQL> SELECT TO_DATE('10-04-08','DD-MM-YY')+5 FROM DUAL;
+
+
+
+24.write a query to display current system date?
+
+SQL> SELECT TO_CHAR(SYSDATE) FROM DUAL;
+
+
+25.display the current system date and time?
+
+
+SQL> SELECT TO_CHAR(SYSDATE,'DD-MM-YYYY HH24:MI:SS') FROM DUAL;
+SQL> SELECT TO_CHAR(SYSDATE,'DD-MM-YYYY HH:MI:SS') FROM DUAL;
+
+
+26.find the last day from sysdate?
+
+
+SQL> SELECT LAST_DAY(SYSDATE) FROM DUAL;
+
+
+27.find the last day from given date 16-APR-2024?
+
+SQL> SELECT TO_DATE('16-APR-2024','DD-MON-YYYY')-1 FROM DUAL ;
+
+
+28.find next month first date?
+
+SQL> SELECT LAST_DAY(SYSDATE)+1 FROM DUAL;
+
+
+
+29.find current month 1st date? 
+
+
+
+30.find next friday date?
+
+SQL> SELECT NEXT_DAY(SYSDATE,'FRI') FROM DUAL;
+
+
+31.find next month first sunday date?
+
+SQL> SELECT NEXT_DAY(LAST_DAY(SYSDATE),'SUN') FROM DUAL;
+
+
+
+32.find the experience of all employees from emp table by using 
+   months_between()?
+
+SQL> SELECT ENAME,SAL,HIREDATE,  MONTHS_BETWEEN(SYSDATE,HIREDATE) AS EXPERIENCE FROM EMP;
+
+SQL> SELECT ENAME,SAL,HIREDATE,TRUNC(MONTHS_BETWEEN(SYSDATE,HIREDATE)/12) AS YEARS,MOD(TRUNC( MONTHS_BETWEEN(SYSDATE,HIREDATE)),12)AS MONTHS FROM EMP;
+SQL> SELECT ENAME,SAL,HIREDATE FROM EMP WHERE TRUNC(SYSDATE)=TRUNC(HIREDATE) ;
+
+
+33.calulate age( in the form of years and months) of kiran. if dob of
+   kiran is 31-DEC-1997?
+
+
+
+
+34.display the employee records who are joined today?
+
+SQL> SELECT * FROM EMP WHERE TO_CHAR(SYSDATE) = TO_CHAR(HIREDATE) ;
+
+
+
+35.display the employee records who are joined in leap year?
+
+
+
+
+
+
+
+
+

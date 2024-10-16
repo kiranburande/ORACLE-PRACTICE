@@ -1,0 +1,299 @@
+                        Sub Querys Task
+                    ========================
+
+                             SUB QUERYS 
+                        ===================
+
+    Query within another query is called as
+ Sub query or Nested query.Sub querys are used to retrieve 
+ data from single or multiple tables by using
+ more than one step process. 
+
+
+    All relational databases having two types of sub querys.
+    These are
+
+   1. Non- Correlated sub querys
+   2. Correlated sub querys
+
+  In Non-correlated sub querys child query is executed first then
+only parent query is executed, whereas in correlated sub querys 
+parent query is executed first then only child query is executed.
+
+1. Non-Correlated sub querys:-
+==============================
+Non Corelated sub querys having two parts.
+1)Child query
+2)Parent query
+
+1. Child Query:- A query which provides values to the another query
+==============   is called Child Query or Inner Query.
+
+2. Parent Query:- A query which receiving values from another query 
+=================    is called Parent Query or Outer Query.
+
+.In non-correlated sub query maximum limit is up to 255 querys.
+
+NON-CORRELATED SUB QUERY:-
+=========================
+        |
+        |----------->1)single row sub querys
+        |----------->2)multiple row sub querys
+        |----------->3)multiple column sub querys
+        |----------->4)inline views (or)subquery are used in from
+                       clause.
+
+1)single row sub querys
+=======================
+   This is a single row sub query because here child query
+returns single value. In single row sub query's we are
+using =,<,>,<=,>=, between operators.
+
+RULES:-
+=======
+1)90%    --------->same column
+2)5%     --------->group function
+3)3%     --------->expressions
+4)2%     --------->different column
+
+
+select * from emp where condition=(select ............)
+      
+EG:-
+===
+SQL> select max(sal) from emp where sal<(select max(sal) from emp);
+
+        Display mechanism in              Task in right hand
+         left hand side                        side  
+
+
+1.Write a query to display senior most employee details
+   from emp table?
+
+SQL> SELECT * FROM EMP WHERE HIREDATE =(SELECT MIN(HIREDATE) FROM EMP);
+
+
+
+2.Write a query to display the employees who are working in
+   SMITH department number from emp table?
+
+SQL> SELECT * FROM EMP WHERE DEPTNO =(SELECT DEPTNO FROM EMP WHERE ENAME= 'SMITH');
+
+
+
+3.Write a query to display the employees who are getting
+      more sal than the highest paid employee in 20th
+           department from emp table?
+
+SQL> SELECT * FROM EMP WHERE SAL > (SELECT MAX(SAL) FROM EMP WHERE DEPTNO =20);
+
+
+
+4.Write a query to display the employees who are getting
+      more sal than the lowest paid employee in 10th
+           department from emp table?
+
+SQL> SELECT * FROM EMP WHERE SAL > (SELECT MIN(SAL) FROM EMP WHERE DEPTNO =10);
+
+
+
+5.Write a query to display second maximum salary or 
+        highest salary from emp table?
+
+
+SECOND MAXIMUM SAL =======>SQL> SELECT MAX(SAL) FROM EMP WHERE SAL<>(SELECT MAX(SAL) FROM EMP);
+ 
+HIGHEST SAL FROM EMP EMP DETAILS ======>  SQL> SELECT * FROM EMP WHERE SAL=(SELECT MAX(sAL) FROM EMP);
+
+
+6.Write a query to display second highest sal employee 
+            details from emp table?
+
+SECOND MAXIMUM SALARY EMP DETAILS  ====> SQL> SELECT * FROM EMP WHERE SAL = (SELECT MAX(SAL) FROM EMP WHERE SAL< (SELECT MAX(SAL) FROM EMP));
+
+
+
+7.Write a query to display the employees who are getting 
+       more salary than the avg(sal)from emp?
+
+SQL> SELECT * FROM EMP WHERE SAL > (SELECT AVG(SAL) FROM EMP);
+
+
+
+8.Write a query to display the employee records who are 
+        earning more salary than the BLAKE salary?
+
+SQL> SELECT * FROM EMP WHERE SAL > (SELECT SAL FROM EMP WHERE ENAME = 'BLAKE');
+
+
+
+9.Write a query to display the employee records whose job 
+            title is same as ALLEN?
+
+SQL> SELECT * FROM EMP WHERE JOB = (SELECT JOB FROM EMP WHERE ENAME = 'ALLEN');
+
+
+
+10.Find the employee name who is earning maximum salary?
+
+
+SQL> SELECT ENAME FROM EMP WHERE SAL = (SELECT MAX(sAL) FROM EMP);
+
+
+
+11.Display the employee records who are senior to blake?
+
+SQL> SELECT * FROM EMP WHERE HIREDATE < (SELECT HIREDATE FROM EMP WHERE ENAME = 'BLAKE');
+
+
+12.Find the deptno which is spending maximum amount on 
+              their employees?
+
+SQL> SELECT DEPTNO
+  2  FROM EMP GROUP BY DEPTNO
+  3  HAVING SUM(SAL)=(SELECT MAX(SUM(SAL)) FROM EMP GROUP BY DEPTNO);
+
+
+13.Write a query to display the employees who are getting more
+  salary than the Allen salary and job same as Jones job?
+
+SQL> SELECT * FROM EMP WHERE SAL > (SELECT SAL FROM EMP WHERE ENAME ='ALLEN')
+  2  AND JOB = (SELECT JOB FROM EMP WHERE ENAME ='JONES');
+
+
+
+14.Write a query to display the employees who are working
+     under Blake as a Manager from emp table by using
+                 empno,mgr columns?
+
+SQL> SELECT * FROM EMP WHERE MGR=(SELECT EMPNO FROM EMP WHERE  ENAME='BLAKE');
+
+
+----------------------------------------------------------------------
+ADVANCED QUErys
+================
+Group by clause used in single row subquery:-in all relational data
+-------------------------------------------   bases we can also use
+group by clause in parent query.
+
+
+NOTE:-In all  relational databases whenever child query having nested
+=====  group functions then we must use Group BY clause within child
+       query.otherwise database server returns error.
+
+ *
+***write a query to display highest no of employee department
+ *   from emp table by using group by clause?
+
+
+Write a query to display those jobs avg(sal) is  more than the 
+the clerks job avg(sal) from emp table by using group by?
+
+
+*
+* Write a query to display lowest average salary job from emp tables?
+* 
+
+
+Write a query to display the employees who are working in sales 
+   department from emp,dept tables.
+
+NOTE:-in all relational databases whenever we are using 
+===== non-corelated subqueries always database server returns
+      parent query table columns in final output.to overcome
+problem if we want to use child query table columns in parent
+query or if we want to display child query table columns in final
+output then we must use joins with in parent query.
+
+SQL>select ename,dname
+     from emp e,dept d
+    where e.deptno=d.deptno
+    and d.deptno=(select deptno from dept where dname='SALES');
+
+    ENAME           DNAME
+  ---------       ---------
+    ALLEN           SALES
+    WARD            SALES
+    MARTIN          SALES
+    BLAKE           SALES
+    TURNER          SALES
+    JAMES           SALES 
+
+
+----------------------------------------------------------------------
+2)MULTIPLE ROW SUB QUERYS:-
+=========================
+
+Write a query to display employee details who are getting 
+maximum sal in each department from emp table.
+
+SQL>select * from emp
+    where sal=(select max(sal) from emp group by deptno);
+                       2850
+                       3000
+                       5000
+
+error:single row subquery returns more than one row.
+  
+   When child query returns multiple values then those querys are
+called Multiple row Sub Querys.in multiple row subquery we are
+using in,all,any operators. 
+
+
+1.Write a query to display employee details who are getting 
+      maximum sal in each department from emp table.
+
+SQL> SELECT ENAME,DEPTNO,SAL FROM EMP E
+  2  WHERE SAL = (SELECT MAX(SAL) FROM EMP WHERE DEPTNO = E.DEPTNO);
+
+
+
+
+2.Write a query to display the employees who are working in sales
+   or research department from emp,dept?
+
+SQL> SELECT E.ENAME,E.DEPTNO,D.DNAME FROM EMP E INNER JOIN DEPT D
+  2  ON E.DEPTNO = D.DEPTNO AND D.DNAME IN ('SALES','RESEARCH');
+
+
+
+
+3.Display the male employees who are getting more
+   salary than the all the salaries of female employees?(5marks)
+
+SQL> select * from employee;
+
+       EMPNO      ENAME       GENDER         SAL
+      -------  ----------    --------     --------
+         1      Bhargavi        f           4000
+         2      subbarao        m           5000
+         3      Radhika         f           3000
+         4      gowtham         m           2000
+         5      kavya           f           2000
+
+SQL> SELECT * FROM EMP1 WHERE SAL > ALL(SELECT SAL FROM EMP1 WHERE GENDER = 'F') AND GENDER='M';
+
+
+
+4.display the employee records whose job title is 
+            same as SMITH,BLAKE
+
+SQL> SELECT * FROM EMP WHERE JOB IN (SELECT JOB FROM EMP WHERE ENAME IN ('SMITH','BLAKE'));
+
+
+
+5.display the employee records who are earning more than all 
+  managers
+
+NOTE:-if sal> all list of values then condition is true
+
+SQL> SELECT * FROM EMP WHERE SAL > ALL(SELECT SAL FROM EMP WHERE JOB ='MANAGER');
+
+
+
+6.display the employee records  who are earning more than any of the
+  managers
+
+note:-if sal>any one of the list of values.
+
+SQL> SELECT * FROM EMP WHERE SAL > (SELECT MIN(SAL) FROM EMP WHERE JOB ='MANAGER');

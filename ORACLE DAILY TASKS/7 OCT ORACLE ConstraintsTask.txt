@@ -137,6 +137,18 @@ CID    CNAME                  SID     SNAME     CID
 
 
 
+CREATE TABLE COURSE(
+		CID NUMBER PRIMARY KEY,
+		CNAME VARCHAR2(20) NOT NULL
+	);
+
+	CREATE TABLE STUDENT100(
+		SID NUMBER PRIMARY KEY,
+		SNAME VARCHAR2(20) NOT NULL,
+		CID NUMBER NOT NULL UNIQUE,
+		FOREIGN KEY (CID) REFERENCES COURSE(CID)
+	);
+
 
 
 6.create the emp table with following columns.and you only think which 
@@ -144,6 +156,20 @@ CID    CNAME                  SID     SNAME     CID
   use all constraints
 
 EMPNO     ENAME     SAL     MGRNO     AGE     ADDRESS    PHONO
+
+
+CREATE TABLE EMP100
+( EMPNO NUMBER(5) PRIMARY KEY,
+  ENAME VARCHAR2(20) NOT NULL,
+  SAL NUMBER NOT NULL,
+  MGRNO NUMBER NOT NULL,
+  AGE  NUMBER CHECK(AGE >= 18),
+  ADDRESS VARCHAR2(20) NOT NULL,
+  PHONENO NUMBER NOT NULL UNIQUE
+                          );
+
+
+
 
 
 Adding (or) Dropping constraints on existing table:-
@@ -211,6 +237,8 @@ SQL> create table dept1
 
 Q)create new table with name emp2 from existing table emp
 
+CREATE TABLE EMP2 AS SELECT * FROM EMP;
+
 create table tablename
   as
 select stmt
@@ -225,7 +253,7 @@ eg of false condition
 Q)create a table with the name emp3 from existing table emp without
   rows(copying table structure)
 
-
+CREATE TABLE EMP3 AS SELECT * FROM EMP WHERE 1=2;
 
 
           
